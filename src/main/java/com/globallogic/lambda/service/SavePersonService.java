@@ -18,7 +18,7 @@ public class SavePersonService {
 
 	private DynamoDB dynamoDb;
 	private String DYNAMODB_TABLE_NAME = "Person";
-	private Regions REGION = Regions.US_WEST_2;
+	private Regions REGION = Regions.US_EAST_1;
 
 	public PersonResponse savePerson(PersonRequest personRequest) {
 		this.initDynamoDbClient();
