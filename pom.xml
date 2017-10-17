@@ -68,6 +68,11 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>io.symphonia</groupId>
+			<artifactId>lambda-logging</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
 		</dependency>
