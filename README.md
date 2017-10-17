@@ -53,10 +53,11 @@ A Lambda application has to be shaded, but a Spring Boot standalone application 
 		</dependency>
 		
 The way this combination works is by using the typical spring boot main class:
-
+```java
     @SpringBootApplication
     public class SavePersonFunctionApplication {
 	public static void main(String[] args) throws Exception {
 	SpringApplication.run(SavePersonFunctionApplication.class, args);
         }
     } 
+```
