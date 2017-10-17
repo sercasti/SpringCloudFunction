@@ -57,7 +57,35 @@ The way this combination works is by using the typical spring boot main class:
     @SpringBootApplication
     public class SavePersonFunctionApplication {
 	public static void main(String[] args) throws Exception {
-	SpringApplication.run(SavePersonFunctionApplication.class, args);
+	    SpringApplication.run(SavePersonFunctionApplication.class, args);
         }
     } 
 ```
+
+This will startup the Spring Boot context (only once, for the first request), and register a @Component("savePersonFunction").
+
+From the AWS perspective, the main handler for this class will be this:
+```java
+public class SavePersonFunctionHandler extends SpringBootRequestHandler<PersonRequest, PersonResponse> {
+}
+``` 
+
+And there is where the magic happens, the SpringBootRequestHandler will handle the request, given a function name invoked from AWS, it will try to find the Function, Consumer or Supplier with that name inside the spring context, and pass the request to the *apply* method of that implementation, in this case:
+
+```java
+@Component("savePersonFunction")
+public class SavePersonFunction implements Function<PersonRequest, PersonResponse> {
+
+	private final SavePersonService savePersonService;
+
+	public SavePersonFunction(final SavePersonService savePersonService) {
+		this.savePersonService = savePersonService;
+	}
+
+	@Override
+	public PersonResponse apply(final PersonRequest personRequest) {
+		return savePersonService.savePerson(personRequest);
+	}
+}
+```
+
