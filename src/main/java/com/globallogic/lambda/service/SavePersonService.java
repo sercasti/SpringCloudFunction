@@ -1,12 +1,15 @@
 package com.globallogic.lambda.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
-import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
@@ -29,14 +32,17 @@ public class SavePersonService {
 	}
 
 	private PutItemOutcome persistData(PersonRequest personRequest) throws ConditionalCheckFailedException {
+		PrimaryKey pk = new PrimaryKey("id", UUID.randomUUID().toString());
 		return this.dynamoDb.getTable(DYNAMODB_TABLE_NAME)
-				.putItem(new PutItemSpec().withItem(new Item().withString("firstName", personRequest.getFirstName())
-						.withString("lastName", personRequest.getLastName())));
+				.putItem(new PutItemSpec()
+						.withItem(new Item().withPrimaryKey(pk).withString("firstName", personRequest.getFirstName())
+								.withString("lastName", personRequest.getLastName())));
 	}
 
 	private void initDynamoDbClient() {
-		AmazonDynamoDBClient client = new AmazonDynamoDBClient();
-		client.setRegion(Region.getRegion(REGION));
+		AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
+                .withRegion(REGION)
+                .build();
 		this.dynamoDb = new DynamoDB(client);
 	}
 }
