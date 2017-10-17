@@ -20,14 +20,14 @@ A Lambda application has to be shaded, but a Spring Boot standalone application 
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-function-adapter-aws</artifactId>
 			<version>1.0.0.BUILD-SNAPSHOT</version>
-		</dependency>
+                </dependency>
   
 ### Step 2: add the dynamodb dependency to your pom file to be able to save to dynamoDB
 
                 <dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-dynamodb</artifactId>
-		</dependency>
+                </dependency>
    
 ### Step 3: use maven shade to generate the uber jar for AWS
         <build>
@@ -46,11 +46,11 @@ A Lambda application has to be shaded, but a Spring Boot standalone application 
     
 ### Step 4: add slf4j logging (optional) dependency
 
-                <dependency>
+                  <dependency>
 			<groupId>io.symphonia</groupId>
 			<artifactId>lambda-logging</artifactId>
 			<version>1.0.0</version>
-		</dependency>
+                  </dependency>
 		
 The way this combination works is by using the typical spring boot main class:
 ```java
