@@ -3,7 +3,7 @@
 # Running Spring Cloud Functions on AWS Lambda using the spring-cloud-function-adapter-aws
 
 
-This project provides an emaple for a Spring Cloud Function application onto AWS Lambda. By writing an app with a single @Bean of type Function it will be deployable in AWS.
+This project provides an example for a Spring Cloud Function application onto AWS Lambda. By writing an app with a single @Bean of type Function it will be deployable in AWS.
 
 The adapter has a couple of generic request handlers that you can use. The most generic is SpringBootRequestHandler which you can extend, and provide the input and output types as type parameters.
 
